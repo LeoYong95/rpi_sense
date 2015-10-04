@@ -18,8 +18,8 @@
 import time
 import RPi.GPIO as GPIO
 import csv
-import matplotlib.pyplot as plt
-from drawnow import *
+#import matplotlib.pyplot as plt
+#from drawnow import *
 
 LDR=23
 GPIO.setmode(GPIO.BCM)
@@ -70,7 +70,7 @@ class Sensor(object):
 light = Sensor(LDR)
 light.Set_Plot(str("Light"))#---HARD CODE
 
-with open('Light.csv','wb') as DataFile:
+with open('data/Light.csv','wb') as DataFile:
         #----------Main Loop<this will not be an infinity loop FIXME>
         while True:
                 data = light.Read_Analog() #Read fron the LDR
