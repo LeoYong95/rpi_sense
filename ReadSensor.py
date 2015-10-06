@@ -17,12 +17,14 @@
 import time
 import RPi.GPIO as GPIO
 import csv
-import matplotlib.pyplot as plt
-import Plot_Test        
+import matplotlib.pyplot as plt       
 from drawnow import *
 
 LDR=23
 GPIO.setmode(GPIO.BCM)
+plt.ion()
+SenseDat=[]
+cnt=0
 
 class Sensor(object):
         #-----------------------construct class
@@ -36,7 +38,7 @@ class Sensor(object):
                 #Discharge capacitor
                 GPIO.setup(self.Pin, GPIO.OUT)
                 GPIO.output(self.Pin, GPIO.LOW)
-                time.sleep(0.1)
+                time.sleep(0.01)
 
                 GPIO.setup(self.Pin, GPIO.IN)
                 #Start Count
@@ -54,14 +56,22 @@ class Sensor(object):
 
                         wr.writerow([dat[i]])
 
+#---------------------------Plot Data
+def Plot_Dat():
+        plt.plot(SenseDat,'ro-')
+
 
 light = Sensor(LDR)
 
-with open('data/Light.csv','wb') as DataFile:
+#with open('data/Light.csv','wb') as DataFile:
         #----------Main Loop<this will not be an infinity loop FIXME>
-        while True:
-                data = light.Read_Analog() #Read fron the LDR
-                print data
-                light.CSV_Gen(data,DataFile)
-                drawnow(Plot_Test.Plot_Dat(data,"Light"))
-                plt.pause(.000001)
+while True:
+        data = light.Read_Analog() #Read fron the LDR
+        print data
+        SenseDat.append(data)
+        #light.CSV_Gen(data,DataFile)
+        drawnow(Plot_Dat)
+        plt.pause(.000001)
+        cnt=cnt+1
+        if(cnt>25):
+                SenseDat.pop(0)
