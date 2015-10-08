@@ -19,20 +19,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 from drawnow import *
 
-data = list()
 plt.ion()
 
-def read_datafile(filename):
-        data= np.loadtxt(filename,delimiter=',')
-        return data
-
-        
-def Plot_Dat():
+def Plot_Dat(data):
         plt.plot(data)
 
 
-while True:
-        data=read_datafile('data/Light.csv')
-        drawnow(Plot_Dat)
+#while True:
+        #drawnow(Plot_Dat)
 
 

@@ -17,6 +17,7 @@
 import time
 import RPi.GPIO as GPIO
 import csv
+import Plot_Test
 import matplotlib.pyplot as plt       
 from drawnow import *
 
@@ -58,7 +59,7 @@ class Sensor(object):
 
 #---------------------------Plot Data
 def Plot_Dat():
-        plt.plot(SenseDat,'ro-')
+       Plot_Test.Plot_Dat(SenseDat)
 
 
 light = Sensor(LDR)
