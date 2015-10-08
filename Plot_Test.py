@@ -16,16 +16,23 @@
 #    
 from pylab import plotfile, show,gca
 import matplotlib.pyplot as plt
-import matplotlib.cbook as cbook
+import numpy as np
+from drawnow import *
 
-fname = 'data/Light.csv'
+data = list()
+plt.ion()
 
+def read_datafile(filename):
+        data= np.loadtxt(filename,delimiter=',')
+        return data
+
+        
 def Plot_Dat():
-        plotfile(fname)
-        #show()
+        plt.plot(data)
 
 
 while True:
-        Plot_Dat()
+        data=read_datafile('data/Light.csv')
+        drawnow(Plot_Dat)
 
 
