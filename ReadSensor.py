@@ -63,17 +63,17 @@ def Plot_Dat():
 
 light = Sensor(LDR)
 
-#with open('data/Light.csv','wb') as DataFile:
+with open('data/Light.csv','wb') as DataFile:
         #----------Main Loop<this will not be an infinity loop FIXME>
 
-while True:
+   while True:
         data = light.Read_Analog() #Read fron the LDR
         print data
         SenseDat.append(data)
-        #light.CSV_Gen(data,DataFile)
-        drawnow(Plot_Dat)
-        plt.pause(.000001)
-        cnt=cnt+1
-        if(cnt>25):
-                SenseDat.pop(0)
+        light.CSV_Gen(data,DataFile)
+   #    drawnow(Plot_Dat)
+   #    plt.pause(.000001)
+   #    cnt=cnt+1
+   #    if(cnt>25):
+   #            SenseDat.pop(0)
 

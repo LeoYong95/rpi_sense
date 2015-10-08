@@ -14,15 +14,18 @@
 #!/usr/local/bin/python
 #FIXME: 
 #    
-
+from pylab import plotfile, show,gca
 import matplotlib.pyplot as plt
+import matplotlib.cbook as cbook
 
-def Plot_Dat(data , name)
-        plt.title( name + ' SENSOR')
-        plt.ylim(0,1300)
-        plt.grid(True)
-        plt.ylabel(name)
-        plt.plot(data,'ro-', label= name)
-        
-        
+fname = 'data/Light.csv'
+
+def Plot_Dat():
+        plotfile(fname)
+        #show()
+
+
+while True:
+        Plot_Dat()
+
 
