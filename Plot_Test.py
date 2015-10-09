@@ -12,11 +12,9 @@
 #Auth:LeoYong
 #Description:Plot a graph based on data given
 #!/usr/local/bin/python
-#FIXME: 
+#FIXME: Configure Plot here
 #    
-from pylab import plotfile, show,gca
 import matplotlib.pyplot as plt
-import numpy as np
 from drawnow import *
 
 plt.ion()
@@ -26,6 +24,6 @@ def Plot_Dat(data):
 
 
 #while True:
-        #drawnow(Plot_Dat)
+#        drawnow(Plot_Dat)
 
 

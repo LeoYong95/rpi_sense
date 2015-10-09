@@ -39,7 +39,7 @@ class Sensor(object):
                 #Discharge capacitor
                 GPIO.setup(self.Pin, GPIO.OUT)
                 GPIO.output(self.Pin, GPIO.LOW)
-                time.sleep(0.01)
+                time.sleep(0.1)
 
                 GPIO.setup(self.Pin, GPIO.IN)
                 #Start Count
@@ -69,11 +69,11 @@ with open('data/Light.csv','wb') as DataFile:
 
    while True:
         data = light.Read_Analog() #Read fron the LDR
-        #print data
+        print data
         SenseDat.append(data)
         #light.CSV_Gen(data,DataFile)
         drawnow(Plot_Dat)
-        plt.pause(.000001)
+        #plt.pause(.000001)
         cnt=cnt+1
         if(cnt>25):
                 SenseDat.pop(0)
