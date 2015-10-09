@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+import matplotlib
+matplotlib.use("TkAgg")
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
+from matplotlib.figure import Figure
 
 import Tkinter as tk
 import ttk #Like the css for tkinter
@@ -10,7 +14,7 @@ class Sense_Pro(tk.Tk):
     def __init__(self,*args,**kwargs): #base arguments and keyword arguments
         tk.Tk.__init__(self,*args,**kwargs)
         #tk.Tk.iconbitmap(self, default='image/icon.ico) ERROR <FIXME> 
-        tk.Tk.wm_title(self, "Sense_Pro")
+        tk.Tk.wm_title(self, "Sense_Pro") #Set Title
 
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand = True) #If item is less then pack
@@ -19,7 +23,7 @@ class Sense_Pro(tk.Tk):
 
         self.frames = {} #create empty dictionary
 
-        for F in (StartPage, Page1, Page2):
+        for F in (StartPage, GraphPage):
 
             frame = F(container,self) #call StartPage
 
@@ -33,8 +37,6 @@ class Sense_Pro(tk.Tk):
         frame = self.frames[cont] #look through the dictionary
         frame.tkraise()   #raise the window to the front
 
-def qf(string):
-    print (string)
     
 class StartPage(tk.Frame):
 
@@ -43,35 +45,30 @@ class StartPage(tk.Frame):
         label = ttk.Label(self, text="Start Page", font=LARGE_FONT)
         label.pack(pady=10,padx=10)
 
-        button1 = ttk.Button(self, text="visit Page 1",
-                            command= lambda:controller.show_frame(Page1))
+        button1 = ttk.Button(self, text="Graph Page",
+                            command= lambda:controller.show_frame(GraphPage))
         button1.pack()
 
-        button1 = ttk.Button(self, text="visit Page 2",
-                            command= lambda:controller.show_frame(Page2))
-        button1.pack()
 
-class Page1(tk.Frame):
+class GraphPage(tk.Frame):
     
     def __init__(self, parent, controller):
         tk.Frame.__init__(self,parent)
-        label = ttk.Label(self, text="Page1", font=LARGE_FONT)
+        label = ttk.Label(self, text="Graph Page", font=LARGE_FONT)
         label.pack(pady=10,padx=10)
 
         button2 = ttk.Button(self, text="Back to Home Page",
                             command= lambda:controller.show_frame(StartPage))
         button2.pack()
 
-class Page2(tk.Frame):
-    
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self,parent)
-        label = ttk.Label(self, text="Page2", font=LARGE_FONT)
-        label.pack(pady=10,padx=10)
+        f = Figure(figsize=(5,5), dpi=100)
+        a = f.add_subplot(111)
+        a.plot([1,2,3,4,5,6,7,8,9],[2,5,7,8,4,3,4,6,6])
 
-        button3 = ttk.Button(self, text="Back to Home Page",
-                            command= lambda:controller.show_frame(StartPage))
-        button3.pack()
+        canvas = FigureCanvasTkAgg(f, self)
+        canvas.show()
+        canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
 
 app = Sense_Pro()
 app.mainloop()
