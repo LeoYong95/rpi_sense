@@ -3,12 +3,32 @@ import matplotlib
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 from matplotlib.figure import Figure
+import matplotlib.animation as animation
+from matplotlib import style
 
 import Tkinter as tk
 import ttk #Like the css for tkinter
 
 LARGE_FONT=("Verdana", 12)
+style.use("ggplot") # style of the graph
 
+
+f = Figure(figsize=(5,5), dpi=100)
+a = f.add_subplot(111)
+a.plot([1,2,3,4,5,6,7,8,9],[2,5,7,8,4,3,4,6,6])
+
+
+def animate(i):  #animation function
+    pullData = open ("data/Light.csv","r").read()
+    dataList = pullData.split('\n')
+    ylist = []
+    for eachLine in dataList:
+        if len(eachLine) >1:
+            ylist.append(eachLine)
+    a.clear()
+    a.plot(ylist)
+
+            
 class Sense_Pro(tk.Tk):
 
     def __init__(self,*args,**kwargs): #base arguments and keyword arguments
@@ -61,14 +81,16 @@ class GraphPage(tk.Frame):
                             command= lambda:controller.show_frame(StartPage))
         button2.pack()
 
-        f = Figure(figsize=(5,5), dpi=100)
-        a = f.add_subplot(111)
-        a.plot([1,2,3,4,5,6,7,8,9],[2,5,7,8,4,3,4,6,6])
 
         canvas = FigureCanvasTkAgg(f, self)
         canvas.show()
         canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
+        toolbar = NavigationToolbar2TkAgg(canvas, self)
+        toolbar.update()
+        canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
 
 app = Sense_Pro()
+ani = animation.FuncAnimation(f, animate, interval=100)
 app.mainloop()

@@ -71,8 +71,8 @@ with open('data/Light.csv','wb') as DataFile:
         data = light.Read_Analog() #Read fron the LDR
         print data
         SenseDat.append(data)
-        #light.CSV_Gen(data,DataFile)
-        drawnow(Plot_Dat)
+        light.CSV_Gen(data,DataFile)
+        #drawnow(Plot_Dat)
         #plt.pause(.000001)
         cnt=cnt+1
         if(cnt>25):
