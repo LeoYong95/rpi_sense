@@ -25,7 +25,7 @@ LDR=23
 GPIO.setmode(GPIO.BCM)
 plt.ion()
 SenseDat=[]
-cnt=0
+
 
 class Sensor(object):
         #-----------------------construct class
@@ -57,6 +57,15 @@ class Sensor(object):
 
                         wr.writerow([dat[i]])
 
+        #------------------------Generate data CSV file 
+        def Data_Gen(self,data):
+                cnt = 0
+                SenseDat = list()
+                while True:
+                        SenseDat.append(data)
+                        
+                return SenseDat
+
 #---------------------------Plot Data
 def Plot_Dat():
        Plot_Test.Plot_Dat(SenseDat)
@@ -64,17 +73,17 @@ def Plot_Dat():
 
 light = Sensor(LDR)
 
-with open('data/Light.csv','wb') as DataFile:
+#with open('data/Light.csv','wb') as DataFile:
         #----------Main Loop<this will not be an infinity loop FIXME>
 
-   while True:
-        data = light.Read_Analog() #Read fron the LDR
-        print data
-        SenseDat.append(data)
-        light.CSV_Gen(data,DataFile)
+   #while True:
+      #  data = light.Read_Analog() #Read fron the LDR
+      #  print data
+      #  SenseDat.append(data)
+      #  light.CSV_Gen(data,DataFile)
         #drawnow(Plot_Dat)
         #plt.pause(.000001)
-        cnt=cnt+1
-        if(cnt>25):
-                SenseDat.pop(0)
+      #  cnt=cnt+1
+      #  if(cnt>25):
+      #         SenseDat.pop(0)
 

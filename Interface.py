@@ -1,32 +1,43 @@
 #!/usr/bin/env python
+
 import matplotlib
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 from matplotlib.figure import Figure
 import matplotlib.animation as animation
 from matplotlib import style
+import numpy as np
 
 import Tkinter as tk
 import ttk #Like the css for tkinter
 
+import ReadSensor
+
 LARGE_FONT=("Verdana", 12)
 style.use("ggplot") # style of the graph
 
+Light = ReadSensor.Sensor(23)
+SenseDat = list()
+IndexDat = list()
+index = 0
 
-f = Figure(figsize=(5,5), dpi=100)
+f = Figure(figsize=(8,5), dpi=100)
 a = f.add_subplot(111)
-a.plot([1,2,3,4,5,6,7,8,9],[2,5,7,8,4,3,4,6,6])
+
 
 
 def animate(i):  #animation function
-    pullData = open ("data/Light.csv","r").read()
-    dataList = pullData.split('\n')
-    ylist = []
-    for eachLine in dataList:
-        if len(eachLine) >1:
-            ylist.append(eachLine)
+    Data = Light.Read_Analog()
+    global index
+    index = index +1
+    print Data
+    SenseDat.append(Data)
+    IndexDat.append(index)
     a.clear()
-    a.plot(ylist)
+    a.plot(IndexDat,SenseDat,'g', label="Lights")
+
+    title = "SensorData"
+    a.set_title(title)
 
             
 class Sense_Pro(tk.Tk):
